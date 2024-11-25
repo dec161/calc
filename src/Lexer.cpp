@@ -89,11 +89,14 @@ std::list<Token> tokenize(const std::string& source)
     {
       std::string number = getNumber(source, i);
       ret.push_back(Token(Number, number));
+      i += number.size();
       continue;
     }
 
     if (isalpha(source[i]))
     {
+      std::string word = getWord(source, i);
+      
       try
       {
         TokenType type = keywords[word];
@@ -103,7 +106,8 @@ std::list<Token> tokenize(const std::string& source)
         return ret; // TODO: add error instead of this
       }
 
-      i += size;
+      ret.push_back(Token(type, word));
+      i += word.size();
       continue;
     }
 
