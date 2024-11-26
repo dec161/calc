@@ -4,17 +4,10 @@
 #include "include/IsDigit.hpp"
 #include <map>
 
-std::map<std::string, TokenType> keywords
-{
-  {"exp", Exp},
-  {"log", Log},
-  {"root", Root}
-};
+Token::Token(TokenType type, const std::string& value) : type(type), value(value) { }
 
 int count(const IPredicate& predicate, const std::string& str, const int start = 0)
 {
-  if (!predicate(str[start])) return -1;
-
   int i;
   for (i = start; predicate(str[i]); i++);
   return i - start;
@@ -24,7 +17,7 @@ std::string getNumber(const std::string& str, const int start = 0)
 {
   IsDigit digit;
   int i = start;
-  int size = count(digit, str, i)
+  int size = count(digit, str, i);
 
   std::string number = str.substr(i, size);
   i += size;
@@ -53,10 +46,17 @@ std::string getWord(const std::string& str, const int start = 0)
 std::list<Token> tokenize(const std::string& source)
 {
   std::list<Token> ret;
+  
+  std::map<std::string, TokenType> keywords;
+  keywords["exp"] = Exp;
+  keywords["log"] = Log;
+  keywords["root"] = Root;
 
   int i = 0;
   while (i < source.size())
   {
+  	while (isspace(source[i])) i++;
+  	
     if (source[i] == '+')
     {
       ret.push_back(Token(Add, "+"));
@@ -95,25 +95,21 @@ std::list<Token> tokenize(const std::string& source)
 
     if (isalpha(source[i]))
     {
+      TokenType type;
       std::string word = getWord(source, i);
       
-      try
-      {
-        TokenType type = keywords[word];
-      }
-      catch (std::out_of_range)
-      {
-        return ret; // TODO: add error instead of this
-      }
-
+      std::map<std::string, TokenType>::iterator it = keywords.find(word);
+      type = (it == keywords.end()) ? Undefined : it->second;
+      
       ret.push_back(Token(type, word));
       i += word.size();
       continue;
     }
 
-    // error if control gets here
+    std::string str;
+    str += source[i++];
+    ret.push_back(Token(Undefined, str));
   }
 
   return ret;
 }
-
