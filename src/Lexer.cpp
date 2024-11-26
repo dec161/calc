@@ -4,8 +4,6 @@
 #include "include/IsDigit.hpp"
 #include <map>
 
-Token::Token(TokenType type, const std::string& value) : type(type), value(value) { }
-
 int count(const IPredicate& predicate, const std::string& str, const int start = 0)
 {
   int i;
@@ -22,9 +20,9 @@ std::string getNumber(const std::string& str, const int start = 0)
   std::string number = str.substr(i, size);
   i += size;
 
-  if (i == '.')
+  if (str[i] == '.')
   {
-    number += i;
+    number += str[i];
     i++;
 
     size = count(digit, str, i);
