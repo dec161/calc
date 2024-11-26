@@ -8,6 +8,7 @@
 
 enum TokenType
 {
+  Undefined,
   Number,
   Add,
   Sub,
@@ -29,4 +30,3 @@ struct Token
 std::list<Token> tokenize(const std::string&);
 
 #endif
-
