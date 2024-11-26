@@ -27,6 +27,8 @@ struct Token
   Token(TokenType, const std::string&);
 };
 
+inline Token::Token(TokenType type, const std::string& value) : type(type), value(value) { }
+
 std::list<Token> tokenize(const std::string&);
 
 #endif
