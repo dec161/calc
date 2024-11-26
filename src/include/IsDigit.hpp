@@ -2,9 +2,9 @@
 #ifndef ISDIGIT_HPP
 #define ISDIGIT_HPP
 
-#include "IFunctor.hpp"
+#include "Functor.hpp"
 
-struct IsDigit : public IFunctor<char, bool>
+struct IsDigit : public Functor<char, bool>
 {
   bool operator()(const char c) const
   {
