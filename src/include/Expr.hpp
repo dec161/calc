@@ -1,8 +1,8 @@
 #pragma once
-#ifndef IEXPR_HPP
-#define IEXPR_HPP
+#ifndef EXPR_HPP
+#define EXPR_HPP
 
-struct IExpr
+struct Expr
 {
   virtual double eval() const = 0;
 };
