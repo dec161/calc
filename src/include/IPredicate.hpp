@@ -4,8 +4,7 @@
 
 struct IPredicate
 {
-  virtual inline bool operator()(const char) const = 0;
+  virtual bool operator()(const char) const = 0;
 };
 
 #endif
-
