@@ -1,9 +1,8 @@
 #include "include/Lexer.hpp"
 #include "include/IsAlpha.hpp"
 #include "include/IsDigit.hpp"
-#include <map>
 
-int count(const IFunctor<char, bool> &functor, const std::string &str, const int start = 0)
+int countConsecutive(const IFunctor<char, bool> &functor, const std::string &str, const int start = 0)
 {
   int i;
   for (i = start; functor(str[i]); i++);
@@ -15,7 +14,7 @@ std::string getNumber(const std::string &str, const int start = 0)
   IsDigit digit;
   int i = start;
 
-  int size = count(digit, str, i);
+  int size = countConsecutive(digit, str, i);
 
   std::string number = str.substr(i, size);
   i += size;
@@ -25,7 +24,7 @@ std::string getNumber(const std::string &str, const int start = 0)
     number += str[i];
     i++;
 
-    size = count(digit, str, i);
+    size = countConsecutive(digit, str, i);
     number += str.substr(i, size);
   }
 
@@ -35,20 +34,22 @@ std::string getNumber(const std::string &str, const int start = 0)
 std::string getWord(const std::string &str, const int start = 0)
 {
   IsAlpha alpha;
-  int size = count(alpha, str, start);
+  int size = countConsecutive(alpha, str, start);
   std::string word = str.substr(start, size);
 
   return word;
 }
 
-std::list<Token> tokenize(const std::string &source)
+Lexer::Lexer()
 {
-  std::list<Token> ret;
-  
-  std::map<std::string, TokenType> keywords;
   keywords["exp"] = Exp;
   keywords["log"] = Log;
   keywords["root"] = Root;
+}
+
+std::list<Token> Lexer::tokenize(const std::string &source)
+{
+  std::list<Token> ret;
 
   int i = 0;
   while (i < source.size())

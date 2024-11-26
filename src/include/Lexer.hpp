@@ -2,33 +2,20 @@
 #ifndef LEXER_HPP
 #define LEXER_HPP
 
-#include <string>
-#include <list>
 #include <map>
+#include <list>
 
-enum TokenType
+#include "Token.hpp"
+
+class Lexer
 {
-  Undefined,
-  Number,
-  Add,
-  Sub,
-  Mul,
-  Div,
-  Exp,
-  Log,
-  Root
+  private:
+    std::map<std::string, TokenType> keywords;
+
+  public:
+    Lexer();
+
+    std::list<Token> tokenize(const std::string&);
 };
-
-struct Token
-{
-  const TokenType type;
-  const std::string value;
-
-  Token(TokenType, const std::string&);
-};
-
-inline Token::Token(TokenType type, const std::string& value) : type(type), value(value) { }
-
-std::list<Token> tokenize(const std::string&);
 
 #endif
