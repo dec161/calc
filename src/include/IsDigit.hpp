@@ -4,11 +4,12 @@
 
 struct IsDigit : public IPredicate
 {
-  inline bool operator()(const char c) const
-  {
-    return isdigit(c);
-  }
+  bool operator()(const char) const;
 };
 
-#endif
+inline bool IsDigit::operator()(const char c) const
+{
+  return isdigit(c);
+}
 
+#endif
