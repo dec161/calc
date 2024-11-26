@@ -1,20 +1,20 @@
 #include "include/Lexer.hpp"
-#include "include/IPredicate.hpp"
 #include "include/IsAlpha.hpp"
 #include "include/IsDigit.hpp"
 #include <map>
 
-int count(const IPredicate& predicate, const std::string& str, const int start = 0)
+int count(const IFunctor<char, bool> &functor, const std::string &str, const int start = 0)
 {
   int i;
-  for (i = start; predicate(str[i]); i++);
+  for (i = start; functor(str[i]); i++);
   return i - start;
 }
 
-std::string getNumber(const std::string& str, const int start = 0)
+std::string getNumber(const std::string &str, const int start = 0)
 {
   IsDigit digit;
   int i = start;
+
   int size = count(digit, str, i);
 
   std::string number = str.substr(i, size);
@@ -32,7 +32,7 @@ std::string getNumber(const std::string& str, const int start = 0)
   return number;
 }
 
-std::string getWord(const std::string& str, const int start = 0)
+std::string getWord(const std::string &str, const int start = 0)
 {
   IsAlpha alpha;
   int size = count(alpha, str, start);
@@ -41,7 +41,7 @@ std::string getWord(const std::string& str, const int start = 0)
   return word;
 }
 
-std::list<Token> tokenize(const std::string& source)
+std::list<Token> tokenize(const std::string &source)
 {
   std::list<Token> ret;
   

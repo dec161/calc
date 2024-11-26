@@ -2,16 +2,14 @@
 #ifndef ISALPHA_HPP
 #define ISALPHA_HPP
 
-#include "IPredicate.hpp"
+#include "IFunctor.hpp"
 
-struct IsAlpha : public IPredicate
+struct IsAlpha : public IFunctor<char, bool>
 {
-  bool operator()(const char) const;
+  bool operator()(const char c) const
+  {
+    return isalpha(c);
+  }
 };
-
-inline bool IsAlpha::operator()(const char c) const
-{
-  return isalpha(c);
-}
 
 #endif

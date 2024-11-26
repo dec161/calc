@@ -2,16 +2,14 @@
 #ifndef ISDIGIT_HPP
 #define ISDIGIT_HPP
 
-#include "IPredicate.hpp"
+#include "IFunctor.hpp"
 
-struct IsDigit : public IPredicate
+struct IsDigit : public IFunctor<char, bool>
 {
-  bool operator()(const char) const;
+  bool operator()(const char c) const
+  {
+    return isdigit(c);
+  }
 };
-
-inline bool IsDigit::operator()(const char c) const
-{
-  return isdigit(c);
-}
 
 #endif
