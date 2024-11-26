@@ -2,6 +2,8 @@
 #ifndef ISDIGIT_HPP
 #define ISDIGIT_HPP
 
+#include "IPredicate.hpp"
+
 struct IsDigit : public IPredicate
 {
   bool operator()(const char) const;
