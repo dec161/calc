@@ -4,11 +4,12 @@
 
 struct IsAlpha : public IPredicate
 {
-  inline bool operator()(const char c) const
-  {
-    return isalpha(c);
-  }
+  bool operator()(const char) const;
+};
+
+inline bool IsAlpha::operator()(const char c) const
+{
+  return isalpha(c);
 }
 
 #endif
-
