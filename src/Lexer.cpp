@@ -53,7 +53,11 @@ std::list<Token> tokenize(const std::string& source)
   int i = 0;
   while (i < source.size())
   {
-  	while (isspace(source[i])) i++;
+    if (isspace(source[i]))
+    {
+      while (isspace(source[i])) i++;
+      continue;
+    }
   	
     if (source[i] == '+')
     {
