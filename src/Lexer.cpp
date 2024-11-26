@@ -56,62 +56,53 @@ std::list<Token> Lexer::tokenize(const std::string &source)
   {
     if (isspace(source[i]))
     {
-      while (isspace(source[i])) i++;
+      i++;
       continue;
     }
   	
+    TokenType type;
+    std::string value;
+
     if (source[i] == '+')
     {
-      ret.push_back(Token(Add, "+"));
-      i++;
-      continue;
+      type = Add;
+      value = "+";
     }
-
-    if (source[i] == '-')
+    else if (source[i] == '-')
     {
-      ret.push_back(Token(Sub, "-"));
-      i++;
-      continue;
+      type = Sub;
+      value = "-";
     }
-
-    if (source[i] == '*')
+    else if (source[i] == '*')
     {
-      ret.push_back(Token(Mul, "*"));
-      i++;
-      continue;
+      type = Mul;
+      value = "*";
     }
-
-    if (source[i] == '/')
+    else if (source[i] == '/')
     {
-      ret.push_back(Token(Div, "/"));
-      i++;
-      continue;
+      type = Div;
+      value = "/";
     }
-
-    if (isdigit(source[i]))
+    else if (isdigit(source[i]))
     {
-      std::string number = getNumber(source, i);
-      ret.push_back(Token(Number, number));
-      i += number.size();
-      continue;
+      type = Number;
+      value = getNumber(source, i);
     }
-
-    if (isalpha(source[i]))
+    else if (isalpha(source[i]))
     {
-      TokenType type;
-      std::string word = getWord(source, i);
-      
-      std::map<std::string, TokenType>::iterator it = keywords.find(word);
+      value = getWord(source, i);
+      std::map<std::string, TokenType>::iterator it = keywords.find(value);
       type = (it == keywords.end()) ? Undefined : it->second;
-      
-      ret.push_back(Token(type, word));
-      i += word.size();
-      continue;
+    }
+    else
+    {
+      type = Undefined;
+      value = std::string() + source[i];
     }
 
-    std::string str;
-    str += source[i++];
-    ret.push_back(Token(Undefined, str));
+    i += value.size();
+    Token token(type, value);
+    ret.push_back(token);
   }
 
   return ret;
