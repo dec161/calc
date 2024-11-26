@@ -2,6 +2,8 @@
 #ifndef ISALPHA_HPP
 #define ISALPHA_HPP
 
+#include "IPredicate.hpp"
+
 struct IsAlpha : public IPredicate
 {
   bool operator()(const char) const;
