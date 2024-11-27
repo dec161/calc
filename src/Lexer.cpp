@@ -44,7 +44,8 @@ Lexer::Lexer()
 {
   keywords["exp"] = Exp;
   keywords["log"] = Log;
-  keywords["root"] = Root;
+  keywords["sqr"] = Sqr;
+  keywords["sqrt"] = Sqrt;
 }
 
 std::list<Token> Lexer::tokenize(const std::string &source)

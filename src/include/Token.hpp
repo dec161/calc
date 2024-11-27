@@ -14,7 +14,8 @@ enum TokenType
   Div,
   Exp,
   Log,
-  Root
+  Sqr,
+  Sqrt
 };
 
 struct Token
