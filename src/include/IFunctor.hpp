@@ -5,8 +5,7 @@
 template<class Parameter, class Return>
 struct IFunctor
 {
-  virtual ~IFunctor() { };
-
+  virtual ~IFunctor() { }
   virtual Return operator()(const Parameter) const = 0;
 };
 

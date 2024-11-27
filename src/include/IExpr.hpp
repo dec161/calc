@@ -4,6 +4,7 @@
 
 struct IExpr
 {
+  virtual ~IExpr() { }
   virtual double eval() const = 0;
 };
 
