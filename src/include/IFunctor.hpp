@@ -1,11 +1,11 @@
 #pragma once
-#ifndef FUNCTOR_HPP
-#define FUNCTOR_HPP
+#ifndef IFUNCTOR_HPP
+#define IFUNCTOR_HPP
 
 template<class Parameter, class Return>
-struct Functor
+struct IFunctor
 {
-  virtual ~Functor() { };
+  virtual ~IFunctor() { };
 
   virtual Return operator()(const Parameter) const = 0;
 };

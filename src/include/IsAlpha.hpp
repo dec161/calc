@@ -2,9 +2,9 @@
 #ifndef ISALPHA_HPP
 #define ISALPHA_HPP
 
-#include "Functor.hpp"
+#include "IFunctor.hpp"
 
-struct IsAlpha : public Functor<char, bool>
+struct IsAlpha : public IFunctor<char, bool>
 {
   bool operator()(const char c) const
   {

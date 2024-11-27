@@ -4,7 +4,6 @@
 
 #include <map>
 #include <list>
-
 #include "Token.hpp"
 
 class Lexer

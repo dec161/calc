@@ -12,12 +12,10 @@ class NumericLiteral : public IExpr
   public:
     NumericLiteral(const std::string&);
   	
-    double eval() const;
+    double eval() const
+    {
+      return value;
+    }
 };
-
-inline double NumericLiteral::eval() const
-{
-  return value;
-}
 
 #endif
