@@ -2,15 +2,16 @@
 #ifndef NUMERICLITERAL_HPP
 #define NUMERICLITERAL_HPP
 
+#include <cstdlib>
 #include "IExpr.hpp"
 
 class NumericLiteral : public IExpr
 {
   private:
-  	double value;
+  	const double value;
     
   public:
-    NumericLiteral(const std::string&);
+    NumericLiteral(const std::string& str) : value(atof(str.c_str())) { }
   	
     double eval() const
     {
