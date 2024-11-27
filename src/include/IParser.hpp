@@ -2,7 +2,7 @@
 #ifndef IPARSER_HPP
 #define IPARSER_HPP
 
-#include "IExpr.hpp"
+#include "../expressions/IExpr.hpp"
 #include "Token.hpp"
 
 struct IParser
