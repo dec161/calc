@@ -13,7 +13,6 @@ class Lexer
 
   public:
     Lexer();
-
     std::list<Token> tokenize(const std::string&);
 };
 

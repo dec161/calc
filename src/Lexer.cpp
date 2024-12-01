@@ -1,6 +1,5 @@
 #include "include/Lexer.hpp"
-#include "include/functors/IsAlpha.hpp"
-#include "include/functors/IsDigit.hpp"
+#include "include/functors.hpp"
 
 int countConsecutive(const IFunctor<char, bool> &functor, const std::string &str, const int start = 0)
 {
