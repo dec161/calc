@@ -15,12 +15,13 @@ class ReferenceCounter
     ReferenceCounter(const ReferenceCounter&);
     ReferenceCounter& operator=(const ReferenceCounter&);
 
-	public:
-    static void ensureInstance()
+    static ReferenceCounter& getInstance()
     {
       if (instance == 0) instance = new ReferenceCounter();
+      return *instance;
     }
-		
+
+	public:
     static void destruct()
     {
       delete instance;
@@ -29,26 +30,22 @@ class ReferenceCounter
 
 		static int get(void *const ref)
 		{
-      ensureInstance();
-			return instance->counter[ref];
+			return getInstance().counter[ref];
 		}
 
     static void inc(void *const ref)
     {
-      ensureInstance();
-      ++(instance->counter[ref]);
+      ++getInstance().counter[ref];
     }
 
     static void dec(void *const ref)
     {
-      ensureInstance();
-      --(instance->counter[ref]);
+      --getInstance().counter[ref];
     }
 
     static void erase(void *const ref)
     {
-      ensureInstance();
-      instance->counter.erase(ref);
+      getInstance().counter.erase(ref);
     }
 };
 
