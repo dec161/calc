@@ -11,13 +11,20 @@ class ReferenceCounter
 {
 	private:
 		std::map<void *const, int> counter;
-		static ReferenceCounter *const instance;
+		static ReferenceCounter *instance;
 		
-		ReferenceCounter() { }
+		ReferenceCounter() : instance(0) { }
 		
 	public:
 		~ReferenceCounter() { delete instance; }
-		ReferenceCounter& 
+		static const ReferenceCounter& get()
+		{
+			if (instance == 0)
+			{
+				instance = new ReferenceCounter();
+			}
+			return *instance;
+		}
 }
 
 template<class T>
