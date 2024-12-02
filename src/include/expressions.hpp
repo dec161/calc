@@ -9,7 +9,6 @@ struct IExpr
 {
   virtual ~IExpr() { }
   virtual double eval() const = 0;
-  //double eval() const { return 0; }
 };
 
 class NumericLiteral : public IExpr
@@ -18,7 +17,7 @@ class NumericLiteral : public IExpr
   	double value;
     
   public:
-    NumericLiteral(double value) : IExpr(), value(value) { }
+    NumericLiteral(double value) : value(value) { }
   	
     double eval() const
     {

@@ -18,12 +18,17 @@ enum TokenType
   Sqrt
 };
 
-struct Token
+class Token
 {
-  const TokenType type;
-  const std::string value;
+  private:
+    TokenType type;
+    std::string value;
 
-  Token(TokenType type, const std::string &value) : type(type), value(value) { };
+  public:
+    Token(TokenType type, const std::string &value) : type(type), value(value) { };
+
+    TokenType getType() const { return type; }
+    const std::string& getValue() const { return value; }
 };
 
 #endif

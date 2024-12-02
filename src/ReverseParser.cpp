@@ -1,7 +1,7 @@
-#include "include/parsers.hpp"
-#include "include/expressions.hpp"
 #include <stdexcept>
 #include <cstdlib>
+#include "include/parsers.hpp"
+#include "include/expressions.hpp"
 
 void ReverseParser::pushUnaryExpr(TokenType type)
 {
@@ -71,32 +71,31 @@ void ReverseParser::pushBinaryExpr(TokenType type)
   expr.push(e);
 }
 
-double ReverseParser::parse(const std::list<Token> &tokens)
+double ReverseParser::parse(const std::list<Token>& tokens)
 {
   for (std::list<Token>::const_iterator it = tokens.begin(); it != tokens.end(); ++it)
   {
-    switch (it->type)
+    switch (it->getType())
     {
       case Undefined:
-        throw std::runtime_error("Unexpected token found: " + it->value);
-        break;
+        throw std::runtime_error("Unexpected token found: " + it->getValue());
 
       case Number:
-        expr.push(Pointer<IExpr>(new NumericLiteral(std::atof(it->value.c_str()))));
+        expr.push(Pointer<IExpr>(new NumericLiteral(std::atof(it->getValue().c_str()))));
         break;
 
       case Exp:
       case Log:
       case Sqr:
       case Sqrt:
-        pushUnaryExpr(it->type);
+        pushUnaryExpr(it->getType());
         break;
 
       case Add:
       case Sub:
       case Mul:
       case Div:
-        pushBinaryExpr(it->type);
+        pushBinaryExpr(it->getType());
         break;
     }
   }

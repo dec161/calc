@@ -26,4 +26,18 @@ class ReverseParser : public IParser
     double parse(const std::list<Token>&);
 };
 
+class CommonParser : public IParser
+{
+  private:
+    std::list<Token>::const_iterator it;
+    std::list<Token>::const_iterator end;
+
+    Pointer<IExpr> parseExpr();
+    Pointer<IExpr> parseAddExpr();
+    Pointer<IExpr> parseNumericLiteral();
+
+  public:
+    double parse(const std::list<Token>&);
+};
+
 #endif
