@@ -3,49 +3,67 @@
 #define POINTER_HPP
 
 #include <map>
+#include <iostream>
+
+static std::map<void *const, int> refCount;
+
+class ReferenceCounter
+{
+	private:
+		std::map<void *const, int> counter;
+		static ReferenceCounter *const instance;
+		
+		ReferenceCounter() { }
+		
+	public:
+		~ReferenceCounter() { delete instance; }
+		ReferenceCounter& 
+}
 
 template<class T>
-struct Pointer
+class Pointer
 {
   private:
-    static std::map<T*, int> refCount;
-    T *obj;
-
-    void addRef(T *ptr)
+	T *const obj;
+	
+	void addPtr()
     {
-      if (refCount.find(ptr) == refCount.end())
+      if (refCount.find(obj) == refCount.end())
       {
-        refCount[ptr] = 0;
+        refCount[obj] = 0;
       }
-
-      refCount[ptr]++;
+      refCount[obj]++;
     }
 
-    void delRef(T *ptr)
+    void delPtr()
     {
-      refCount[ptr]--;
-      if (refCount[ptr] < 1)
+      if (refCount.find(obj) == refCount.end())
       {
-        delete ptr;
+      	std::cout << obj << " counter not found from destructor\n";
+      	return;
+	  }
+    	
+      refCount[obj]--;
+      if (refCount[obj] < 1)
+      {
+        delete obj;
+        refCount.erase(obj);
       }
     }
-
+    
   public:
-    Pointer(T *obj = 0) : obj(obj)
-    {
-      addRef(obj);
-    }
-
-    ~Pointer()
-    {
-      delRef(obj);
-    }
-
+  	Pointer(T *const obj = 0) : obj(obj)
+  	{
+	  addPtr();
+	}
+	
+  	~Pointer()
+  	{
+  	  delPtr();
+	}
+	
     T& operator*() const { return *obj; }
-    T* operator->() const { return obj; }
+    T *const operator->() const { return obj; }
 };
-
-template<class T>
-std::map<T*, int> Pointer<T>::refCount;
 
 #endif
