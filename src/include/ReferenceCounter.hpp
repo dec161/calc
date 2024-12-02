@@ -7,8 +7,8 @@
 class ReferenceCounter
 {
 	private:
-		std::map<void *const, int> counter;
-		static ReferenceCounter *instance;
+		std::map<void* const, int> counter;
+		static ReferenceCounter* instance;
 
 		ReferenceCounter() { }
 		~ReferenceCounter() { }
@@ -28,22 +28,22 @@ class ReferenceCounter
       instance = 0;
     }
 
-		static int get(void *const ref)
+		static int get(void* const ref)
 		{
 			return getInstance().counter[ref];
 		}
 
-    static void inc(void *const ref)
+    static void inc(void* const ref)
     {
       ++getInstance().counter[ref];
     }
 
-    static void dec(void *const ref)
+    static void dec(void* const ref)
     {
       --getInstance().counter[ref];
     }
 
-    static void erase(void *const ref)
+    static void erase(void* const ref)
     {
       getInstance().counter.erase(ref);
     }

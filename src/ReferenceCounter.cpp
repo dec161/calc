@@ -1,2 +1,2 @@
 #include "include/ReferenceCounter.hpp"
-ReferenceCounter *ReferenceCounter::instance = 0;
+ReferenceCounter* ReferenceCounter::instance = 0;
