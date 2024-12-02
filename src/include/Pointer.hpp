@@ -9,17 +9,27 @@ template<class T>
 class Pointer
 {
   private:
-    T *const obj;
-
-    Pointer& operator=(const Pointer&);
-	
-    void addPtr()
+    T* obj;
+    
+  public:
+    Pointer(const Pointer& other) : obj(other.obj)
     {
       ReferenceCounter::inc(obj);
     }
 
-    void delPtr()
+  	Pointer(T* const obj = 0) : obj(obj)
+  	{
+      ReferenceCounter::inc(obj);
+    }
+	
+    Pointer& operator=(Pointer other)
     {
+      swap(*this, other);
+      return *this;
+    }
+
+  	~Pointer()
+  	{
       ReferenceCounter::dec(obj);
       if (ReferenceCounter::get(obj) < 1)
       {
@@ -27,25 +37,15 @@ class Pointer
         ReferenceCounter::erase(obj);
       }
     }
-    
-  public:
-    Pointer(const Pointer &other) : obj(other.obj)
-    {
-      addPtr();
-    }
-
-  	Pointer(T *const obj = 0) : obj(obj)
-  	{
-      addPtr();
-    }
-	
-  	~Pointer()
-  	{
-  	  delPtr();
-    }
 	
     T& operator*() const { return *obj; }
-    T *const operator->() const { return obj; }
+    T* const operator->() const { return obj; }
+
+    friend void swap(Pointer& first, Pointer& second)
+    {
+      using std::swap;
+      swap(first.obj, second.obj);
+    }
 };
 
 #endif
