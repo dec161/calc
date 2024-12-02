@@ -21,7 +21,7 @@ class Pointer
   	{
       ReferenceCounter::inc(obj);
     }
-	
+
     Pointer& operator=(Pointer other)
     {
       swap(*this, other);
@@ -38,7 +38,7 @@ class Pointer
       }
     }
 	
-    T& operator*() const { return *obj; }
+    const T& operator*() const { return *obj; }
     T* const operator->() const { return obj; }
 
     friend void swap(Pointer& first, Pointer& second)

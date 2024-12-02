@@ -7,7 +7,7 @@ void ReverseParser::pushUnaryExpr(TokenType type)
 {
   if (expr.size() < 1)
   {
-      throw std::runtime_error("Not enough arguments supplied");
+    throw std::runtime_error("Not enough arguments supplied");
   }
 
   Pointer<IExpr> e;
@@ -17,19 +17,19 @@ void ReverseParser::pushUnaryExpr(TokenType type)
   switch (type)
   {
     case Exp:
-      *e = ExpExpr(x);
+      e = new ExpExpr(x);
       break;
 
     case Log:
-      *e = LogExpr(x);
+      e = new LogExpr(x);
       break;
 
     case Sqr:
-      *e = SqrExpr(x);
+      e = new SqrExpr(x);
       break;
     
     case Sqrt:
-      *e = SqrtExpr(x);
+      e = new SqrtExpr(x);
       break;
   }
 
@@ -40,7 +40,7 @@ void ReverseParser::pushBinaryExpr(TokenType type)
 {
   if (expr.size() < 2)
   {
-      throw std::runtime_error("Not enough arguments supplied");
+    throw std::runtime_error("Not enough arguments supplied");
   }
 
   Pointer<IExpr> e;
@@ -52,19 +52,19 @@ void ReverseParser::pushBinaryExpr(TokenType type)
   switch (type)
   {
     case Add:
-      *e = AddExpr(lhs, rhs);
+      e = new AddExpr(lhs, rhs);
       break;
 
     case Sub:
-      *e = SubExpr(lhs, rhs);
+      e = new SubExpr(lhs, rhs);
       break;
 
     case Mul:
-      *e = MulExpr(lhs, rhs);
+      e = new MulExpr(lhs, rhs);
       break;
     
     case Div:
-      *e = DivExpr(lhs, rhs);
+      e = new DivExpr(lhs, rhs);
       break;
   }
 
@@ -73,7 +73,7 @@ void ReverseParser::pushBinaryExpr(TokenType type)
 
 double ReverseParser::parse(const std::list<Token> &tokens)
 {
-  /*for (std::list<Token>::const_iterator it = tokens.begin(); it != tokens.end(); ++it)
+  for (std::list<Token>::const_iterator it = tokens.begin(); it != tokens.end(); ++it)
   {
     switch (it->type)
     {
@@ -99,8 +99,6 @@ double ReverseParser::parse(const std::list<Token> &tokens)
         pushBinaryExpr(it->type);
         break;
     }
-  }*/
-  Pointer<IExpr> a(new NumericLiteral(3));
-  expr.push(a);
+  }
   return expr.top()->eval();
 }
