@@ -17,7 +17,7 @@ int main()
   }
   std::cout << '\n';
 
-  std::cout << "Result: " << reverseParser.parse(tokens);
+  std::cout << "Result: " << reverseParser.parse(tokens) << '\n';
 
   return 0;
 }

@@ -102,6 +102,5 @@ double ReverseParser::parse(const std::list<Token> &tokens)
   }*/
   Pointer<IExpr> a(new NumericLiteral(3));
   expr.push(a);
-  //return expr.top()->eval();
-  return 0;
+  return expr.top()->eval();
 }
