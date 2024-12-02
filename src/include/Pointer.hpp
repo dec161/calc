@@ -10,17 +10,19 @@ class Pointer
 {
   private:
     T* obj;
-    
+
   public:
     Pointer(const Pointer& other) : obj(other.obj)
     {
       ReferenceCounter::inc(obj);
     }
 
-  	Pointer(T* const obj = 0) : obj(obj)
-  	{
+    Pointer(T* const obj) : obj(obj)
+    {
       ReferenceCounter::inc(obj);
     }
+
+    Pointer() : obj(0) { }
 
     Pointer& operator=(Pointer other)
     {
@@ -28,8 +30,8 @@ class Pointer
       return *this;
     }
 
-  	~Pointer()
-  	{
+    ~Pointer()
+    {
       ReferenceCounter::dec(obj);
       if (ReferenceCounter::get(obj) < 1)
       {

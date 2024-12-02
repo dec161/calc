@@ -100,5 +100,6 @@ double ReverseParser::parse(const std::list<Token> &tokens)
         break;
     }
   }
+
   return expr.top()->eval();
 }
