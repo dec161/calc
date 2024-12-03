@@ -2,24 +2,36 @@
 #include "include/parsers.hpp"
 #include <iostream>
 
+void testOut(const Pointer<IParser>& parser, const Lexer& lexer, const std::string& src)
+{
+  std::list<Token> tokens = lexer.tokenize(src);
+  std::cout << "Input: " << src << '\n';
+  std::cout << "Result: " << parser->parse(tokens) << '\n';
+}
+
 int main()
 {
-  Pointer<IParser> parser;
   Lexer lexer;
   std::list<Token> tokens;
 
-  std::string testReverse = "1 2 + sqr";
-  std::string testCommon = "1 + 2 + 3";
-
-  parser = new ReverseParser;
-  tokens = lexer.tokenize(testReverse);
-  std::cout << "Input: " << testReverse << '\n';
-  std::cout << "Result: " << parser->parse(tokens) << '\n';
-
-  parser = new CommonParser;
-  tokens = lexer.tokenize(testCommon);
-  std::cout << "Input: " << testCommon << '\n';
-  std::cout << "Result: " << parser->parse(tokens) << '\n';
+  testOut(new CommonParser, lexer, "5");
+  std::cout << '\n';
+  testOut(new CommonParser, lexer, "5 * 2");
+  std::cout << '\n';
+  testOut(new CommonParser, lexer, "5 + 3");
+  std::cout << '\n';
+  testOut(new CommonParser, lexer, "5 + 3 * 2");
+  std::cout << '\n';
+  testOut(new CommonParser, lexer, "5 * 3 + 2");
+  std::cout << '\n';
+  testOut(new CommonParser, lexer, "5 + 4 + 3 + 2");
+  std::cout << '\n';
+  testOut(new CommonParser, lexer, "5 * 4 * 3 * 2");
+  std::cout << '\n';
+  testOut(new CommonParser, lexer, "sqr 5");
+  std::cout << '\n';
+  testOut(new CommonParser, lexer, "5 * sqrt sqr 2");
+  std::cout << '\n';
 
   return 0;
 }
