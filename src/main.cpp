@@ -12,25 +12,26 @@ void testOut(const Pointer<IParser>& parser, const Lexer& lexer, const std::stri
 int main()
 {
   Lexer lexer;
+  Pointer<IParser> parser = new CommonParser;
   std::list<Token> tokens;
 
-  testOut(new CommonParser, lexer, "5");
+  testOut(parser, lexer, "5");
   std::cout << '\n';
-  testOut(new CommonParser, lexer, "5 * 2");
+  testOut(parser, lexer, "5 * 2");
   std::cout << '\n';
-  testOut(new CommonParser, lexer, "5 + 3");
+  testOut(parser, lexer, "5 + 3");
   std::cout << '\n';
-  testOut(new CommonParser, lexer, "5 + 3 * 2");
+  testOut(parser, lexer, "5 + 3 * 2");
   std::cout << '\n';
-  testOut(new CommonParser, lexer, "5 * 3 + 2");
+  testOut(parser, lexer, "5 * 3 + 2");
   std::cout << '\n';
-  testOut(new CommonParser, lexer, "5 + 4 + 3 + 2");
+  testOut(parser, lexer, "5 + 4 + 3 + 2");
   std::cout << '\n';
-  testOut(new CommonParser, lexer, "5 * 4 * 3 * 2");
+  testOut(parser, lexer, "5 * 4 * 3 * 2");
   std::cout << '\n';
-  testOut(new CommonParser, lexer, "sqr 5");
+  testOut(parser, lexer, "sqr 5");
   std::cout << '\n';
-  testOut(new CommonParser, lexer, "5 * sqrt sqr 2");
+  testOut(parser, lexer, "5 * sqrt sqr 2");
   std::cout << '\n';
 
   return 0;
