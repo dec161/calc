@@ -3,37 +3,53 @@
 #include "include/parsers.hpp"
 #include "include/expressions.hpp"
 
+Pointer<IExpr> createUnaryExpr(TokenType type, const Pointer<IExpr>& x)
+{
+  switch (type)
+  {
+    case Exp:
+      return new ExpExpr(x);
+
+    case Log:
+      return new LogExpr(x);
+
+    case Sqr:
+      return new SqrExpr(x);
+    
+    case Sqrt:
+      return new SqrtExpr(x);
+  }
+}
+
+Pointer<IExpr> createBinaryExpr(TokenType type, const Pointer<IExpr>& lhs, const Pointer<IExpr>& rhs)
+{
+  switch (type)
+  {
+    case Add:
+      return new AddExpr(lhs, rhs);
+
+    case Sub:
+      return new SubExpr(lhs, rhs);
+
+    case Mul:
+      return new MulExpr(lhs, rhs);
+    
+    case Div:
+      return new DivExpr(lhs, rhs);
+  }
+}
+
 void ReverseParser::pushUnaryExpr(TokenType type)
 {
   if (expr.size() < 1)
   {
     throw std::runtime_error("Not enough arguments supplied");
   }
-
-  Pointer<IExpr> e;
+  
   Pointer<IExpr> x = expr.top();
   expr.pop();
 
-  switch (type)
-  {
-    case Exp:
-      e = new ExpExpr(x);
-      break;
-
-    case Log:
-      e = new LogExpr(x);
-      break;
-
-    case Sqr:
-      e = new SqrExpr(x);
-      break;
-    
-    case Sqrt:
-      e = new SqrtExpr(x);
-      break;
-  }
-
-  expr.push(e);
+  expr.push(createUnaryExpr(type, x));
 }
 
 void ReverseParser::pushBinaryExpr(TokenType type)
@@ -43,32 +59,12 @@ void ReverseParser::pushBinaryExpr(TokenType type)
     throw std::runtime_error("Not enough arguments supplied");
   }
 
-  Pointer<IExpr> e;
   Pointer<IExpr> lhs = expr.top();
   expr.pop();
   Pointer<IExpr> rhs = expr.top();
   expr.pop();
 
-  switch (type)
-  {
-    case Add:
-      e = new AddExpr(lhs, rhs);
-      break;
-
-    case Sub:
-      e = new SubExpr(lhs, rhs);
-      break;
-
-    case Mul:
-      e = new MulExpr(lhs, rhs);
-      break;
-    
-    case Div:
-      e = new DivExpr(lhs, rhs);
-      break;
-  }
-
-  expr.push(e);
+  expr.push(createBinaryExpr(type, lhs, rhs));
 }
 
 double ReverseParser::parse(const std::list<Token>& tokens)
