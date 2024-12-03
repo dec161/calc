@@ -18,31 +18,24 @@ Pointer<IExpr> CommonParser::parseExpr()
 Pointer<IExpr> CommonParser::parseAddExpr()
 {
   Pointer<IExpr> lhs = parseNumericLiteral();
+  Pointer<IExpr> rhs;
 
-  if (it->getType() == Add)
-  {
-    ++it;
-    Pointer<IExpr> rhs = parseNumericLiteral();
-    return new AddExpr(lhs, rhs);
-  }
 
-  return lhs;
-
-  /*switch (it->getType())
+  switch (it->getType())
   {
     case Add:
       ++it;
-      Pointer<IExpr> rhs = parseNumericLiteral();
+      rhs = parseExpr();
       return new AddExpr(lhs, rhs);
 
-    *case Sub:
+    case Sub:
       ++it;
-      Pointer<IExpr> rhs = parseNumericLiteral();
-      return new SubExpr(lhs, rhs);*/
+      rhs = parseExpr();
+      return new SubExpr(lhs, rhs);
 
-    /*default:
-      return lhs;*/
-  //}
+    default:
+      return lhs;
+  }
 }
 
 Pointer<IExpr> CommonParser::parseNumericLiteral()
@@ -50,8 +43,7 @@ Pointer<IExpr> CommonParser::parseNumericLiteral()
   switch (it->getType())
   {
     case Number:
-      ++it;
-      return new NumericLiteral(std::atof(it->getValue().c_str()));
+      return new NumericLiteral(std::atof((it++)->getValue().c_str()));
 
     default:
       throw std::runtime_error("Unexpected token found: " + it->getValue());

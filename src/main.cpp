@@ -9,12 +9,12 @@ int main()
   std::list<Token> tokens;
 
   std::string testReverse = "1 2 + sqr";
-  std::string testCommon = "1 + 2";
+  std::string testCommon = "1 + 2 + 3";
 
-  /*parser = new ReverseParser;
+  parser = new ReverseParser;
   tokens = lexer.tokenize(testReverse);
   std::cout << "Input: " << testReverse << '\n';
-  std::cout << "Result: " << parser->parse(tokens) << '\n';*/
+  std::cout << "Result: " << parser->parse(tokens) << '\n';
 
   parser = new CommonParser;
   tokens = lexer.tokenize(testCommon);
