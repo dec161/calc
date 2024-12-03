@@ -32,7 +32,7 @@ class AddExpr : public IExpr
     Pointer<IExpr> rhs;
     
   public:
-    AddExpr(const Pointer<IExpr> &lhs, const Pointer<IExpr> &rhs) : lhs(lhs), rhs(rhs) { }
+    AddExpr(const Pointer<IExpr>& lhs, const Pointer<IExpr>& rhs) : lhs(lhs), rhs(rhs) { }
   	
     double eval() const
     {
@@ -47,7 +47,7 @@ class SubExpr : public IExpr
     Pointer<IExpr> rhs;
     
   public:
-    SubExpr(const Pointer<IExpr> &lhs, const Pointer<IExpr> &rhs) : lhs(lhs), rhs(rhs) { }
+    SubExpr(const Pointer<IExpr>& lhs, const Pointer<IExpr>& rhs) : lhs(lhs), rhs(rhs) { }
   	
     double eval() const
     {
@@ -62,7 +62,7 @@ class MulExpr : public IExpr
     Pointer<IExpr> rhs;
     
   public:
-    MulExpr(const Pointer<IExpr> &lhs, const Pointer<IExpr> &rhs) : lhs(lhs), rhs(rhs) { }
+    MulExpr(const Pointer<IExpr>& lhs, const Pointer<IExpr>& rhs) : lhs(lhs), rhs(rhs) { }
   	
     double eval() const
     {
@@ -77,7 +77,7 @@ class DivExpr : public IExpr
     Pointer<IExpr> rhs;
     
   public:
-    DivExpr(const Pointer<IExpr> &lhs, const Pointer<IExpr> &rhs) : lhs(lhs), rhs(rhs) { }
+    DivExpr(const Pointer<IExpr>& lhs, const Pointer<IExpr>& rhs) : lhs(lhs), rhs(rhs) { }
   	
     double eval() const
     {
@@ -95,7 +95,7 @@ class ExpExpr : public IExpr
   	
     double eval() const
     {
-      return exp(x->eval());
+      return std::exp(x->eval());
     }
 };
 
@@ -109,7 +109,7 @@ class LogExpr : public IExpr
   	
     double eval() const
     {
-      return log(x->eval());
+      return std::log(x->eval());
     }
 };
 
@@ -138,7 +138,7 @@ class SqrtExpr : public IExpr
   	
     double eval() const
     {
-      return sqrt(x->eval());
+      return std::sqrt(x->eval());
     }
 };
 
