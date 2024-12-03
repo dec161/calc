@@ -91,7 +91,7 @@ class ExpExpr : public IExpr
     Pointer<IExpr> x;
     
   public:
-    ExpExpr(const Pointer<IExpr> &x) : x(x) { }
+    ExpExpr(const Pointer<IExpr>& x) : x(x) { }
   	
     double eval() const
     {
@@ -105,7 +105,7 @@ class LogExpr : public IExpr
     Pointer<IExpr> x;
     
   public:
-    LogExpr(const Pointer<IExpr> &x) : x(x) { }
+    LogExpr(const Pointer<IExpr>& x) : x(x) { }
   	
     double eval() const
     {
@@ -119,7 +119,7 @@ class SqrExpr : public IExpr
     Pointer<IExpr> x;
     
   public:
-    SqrExpr(const Pointer<IExpr> &x) : x(x) { }
+    SqrExpr(const Pointer<IExpr>& x) : x(x) { }
   	
     double eval() const
     {
@@ -134,7 +134,7 @@ class SqrtExpr : public IExpr
     Pointer<IExpr> x;
     
   public:
-    SqrtExpr(const Pointer<IExpr> &x) : x(x) { }
+    SqrtExpr(const Pointer<IExpr>& x) : x(x) { }
   	
     double eval() const
     {
