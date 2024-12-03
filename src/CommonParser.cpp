@@ -2,15 +2,10 @@
 #include <cstdlib>
 #include "include/parsers.hpp"
 
-void CommonParser::init(const std::list<Token>& tokens)
+double CommonParser::parse(const std::list<Token>& tokens)
 {
   it = tokens.begin();
   end = tokens.end();
-}
-
-double CommonParser::parse(const std::list<Token>& tokens)
-{
-  init(tokens);
   return parseExpr()->eval();
 }
 
@@ -90,12 +85,10 @@ Pointer<IExpr> CommonParser::parseUnaryExpr()
 
 Pointer<IExpr> CommonParser::parseNumericLiteral()
 {
-  switch (it->getType())
-  {
-    case Number:
-      return new NumericLiteral(std::atof((it++)->getValue().c_str()));
-
-    default:
-      throw std::runtime_error("Unexpected token found: " + it->getValue());
-  }
+  if (it == end) throw std::runtime_error("Unexpected end of expression found");
+  
+  if (it->getType() != Number) throw std::runtime_error("Unexpected token found: " + it->getValue());
+  
+  double value = std::atof((it++)->getValue().c_str());
+  return new NumericLiteral(value);
 }
