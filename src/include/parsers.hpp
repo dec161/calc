@@ -31,9 +31,12 @@ class CommonParser : public IParser
   private:
     std::list<Token>::const_iterator it;
     std::list<Token>::const_iterator end;
-
+    
+    void init(const std::list<Token>&);
     Pointer<IExpr> parseExpr();
     Pointer<IExpr> parseAddExpr();
+    Pointer<IExpr> parseMulExpr();
+    Pointer<IExpr> parseUnaryExpr();
     Pointer<IExpr> parseNumericLiteral();
 
   public:
