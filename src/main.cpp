@@ -8,6 +8,19 @@ void printUsage()
             << "calc MODE EXPRESSION\n";
 }
 
+void printModes()
+{
+  std::cout << "Available modes:\n"
+            << "-c\tCommon notation mode\n"
+            << "\tExample: 1 + 2 * 3 - 4\n"
+            << "\tResult: 3\n"
+            << "\n"
+            << "-r\tReverse notation mode (4 3 2 * 1 + -)\n"
+            << "\tExample: 4 3 2 * 1 + -\n"
+            << "\tResult: 3\n"
+            << "\n"
+}
+
 int main(int argc, char** argv)
 {
   if (argc < 2) 
@@ -29,7 +42,7 @@ int main(int argc, char** argv)
   }
   else
   {
-    printUsage();
+    printModes();
     return 1;
   }
 	
