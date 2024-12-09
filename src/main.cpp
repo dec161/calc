@@ -49,6 +49,8 @@ int main()
   std::cout << '\n';
   testOutput(parser, lexer, "(1 + (2 + (3 * (2 + 2))))", 15);
   std::cout << '\n';
+  testOutput(parser, lexer, "(1 + sqr (2 + (sqrt 4 + 3 * (2 + 2))))", 257);
+  std::cout << '\n';
 
   return 0;
 }
