@@ -36,7 +36,7 @@ class CommonParser : public IParser
     Pointer<IExpr> parseAddExpr();
     Pointer<IExpr> parseMulExpr();
     Pointer<IExpr> parseUnaryExpr();
-    Pointer<IExpr> parseNumericLiteral();
+    Pointer<IExpr> parsePrimaryExpr();
 
   public:
     double parse(const std::list<Token>&);
