@@ -47,7 +47,7 @@ Lexer::Lexer()
   keywords["sqrt"] = Sqrt;
 }
 
-std::list<Token> Lexer::tokenize(const std::string &source)
+std::list<Token> Lexer::tokenize(const std::string &source) const
 {
   std::list<Token> ret;
 
@@ -83,6 +83,16 @@ std::list<Token> Lexer::tokenize(const std::string &source)
       type = Div;
       value = "/";
     }
+    else if (source[i] == '(')
+    {
+      type = OpenParen;
+      value = "(";
+    }
+    else if (source[i] == ')')
+    {
+      type = CloseParen;
+      value = ")";
+    }
     else if (isdigit(source[i]))
     {
       type = Number;
@@ -91,7 +101,7 @@ std::list<Token> Lexer::tokenize(const std::string &source)
     else if (isalpha(source[i]))
     {
       value = getWord(source, i);
-      std::map<std::string, TokenType>::iterator it = keywords.find(value);
+      std::map<std::string, TokenType>::const_iterator it = keywords.find(value);
       type = (it == keywords.end()) ? Undefined : it->second;
     }
     else
