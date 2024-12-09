@@ -79,16 +79,29 @@ Pointer<IExpr> CommonParser::parseUnaryExpr()
       return new SqrtExpr(parseUnaryExpr());
     
     default:
-      return parseNumericLiteral();
+      return parsePrimaryExpr();
   }
 }
 
-Pointer<IExpr> CommonParser::parseNumericLiteral()
+Pointer<IExpr> CommonParser::parsePrimaryExpr()
 {
   if (it == end) throw std::runtime_error("Unexpected end of expression found");
   
-  if (it->getType() != Number) throw std::runtime_error("Unexpected token found: " + it->getValue());
+  Pointer<IExpr> expr;
   
-  double value = std::atof((it++)->getValue().c_str());
-  return new NumericLiteral(value);
+  switch (it->getType())
+  {
+    case Number:
+      return new NumericLiteral(std::atof((it++)->getValue().c_str()));
+    
+    case OpenParen:
+      ++it;
+      expr = parseExpr();
+	  if (it->getType() != CloseParen) throw std::runtime_error("Closing parenthesis not found");
+      ++it;
+      return expr;
+    
+    default:
+      throw std::runtime_error("Unexpected token found: " + it->getValue());
+  }
 }
