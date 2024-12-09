@@ -15,7 +15,9 @@ enum TokenType
   Exp,
   Log,
   Sqr,
-  Sqrt
+  Sqrt,
+  OpenParen,
+  CloseParen
 };
 
 class Token
