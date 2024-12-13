@@ -30,6 +30,15 @@ bool startsWith(const std::string& str, const std::string& start)
   return str.find(start) == 0;
 }
 
+std::map<std::string, Pointer<IParser> >::const_iterator findStart(const std::map<std::string, Pointer<IParser> >& map, const std::string& key)
+{
+  for (std::map<std::string, Pointer<IParser> >::const_iterator it = map.begin(); it != map.end(); ++it)
+  {
+    if (startsWith(it->first, key)) return it;
+  }
+  return map.end();
+}
+
 void inputLoop()
 {
   Lexer lexer;
@@ -40,6 +49,8 @@ void inputLoop()
   parsers["reverse"] = new ReverseParser;
   parsers["common"] = new CommonParser;
   
+  parser = parsers["common"];
+  
   while (1)
   {
     std::string input;
@@ -49,51 +60,41 @@ void inputLoop()
       
     if (startsWith("exit", input)) return;
     
-    for (std::map<std::string, Pointer<IParser> >::const_iterator it = parsers.cbegin(); it != parsers.cend(); ++it)
+    std::map<std::string, Pointer<IParser> >::const_iterator it = findStart(parsers, input);
+    if (it != parsers.end())
     {
-      if (startsWith(it->first, input))
-	  {
-        current = it->first;
-        parser = it->second;
-      }
+      current = it->first;
+      parser = it->second;
+      continue;
 	}
     
-    std::cout << calculate(input) << '\n';
+    std::cout << parser->parse(lexer.tokenize(input)) << '\n';
   }
 }
 
-void singleExpr()
+int main(int argc, char** argv)
 {
+  if (argc == 1)
+  {
+    inputLoop();
+    return 0;
+  }
+  
+  if (argc < 3)
+  {
+    printUsage();
+    return 1;
+  }
+  
   Lexer lexer;
   Pointer<IParser> parser;
   
   std::map<std::string, Pointer<IParser> > parsers;
   parsers["-r"] = new ReverseParser;
   parsers["-c"] = new CommonParser;
-  
-  std::map<std::string, Pointer<IParser> >::const_iterator it = parsers.find(std::string(argv[1]));
-  if (it == parsers.cend())
-  {
-    printModes();
-    return;
-  }
-}
-
-int main(int argc, char** argv)
-{
-  if (argc == 2)
-  {
-    printUsage();
-    return 1;
-  }
-  
-  if (argc == 1)
-  {
-    
-  }
 
   std::map<std::string, Pointer<IParser> >::const_iterator it = parsers.find(std::string(argv[1]));
-  if (it == parsers.cend())
+  if (it == parsers.end())
   {
     printModes();
     return 1;
