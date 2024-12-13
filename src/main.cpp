@@ -1,6 +1,7 @@
 #include "include/Lexer.hpp"
 #include "include/parsers.hpp"
 #include <iostream>
+#include <stdexcept>
 
 void printUsage()
 {
@@ -63,7 +64,17 @@ void inputLoop()
       continue;
 	}
     
-    std::cout << parser->parse(lexer.tokenize(input)) << '\n';
+    double result;
+  
+    try
+    {
+      result = parser->parse(lexer.tokenize(input));
+      std::cout << result << '\n';
+    }
+    catch (std::runtime_error e)
+    {
+      std::cout << e.what() << '\n';
+    }
   }
 }
 
@@ -105,7 +116,17 @@ int main(int argc, char** argv)
     input += ' ';
   }
 
-  std::cout << parser->parse(lexer.tokenize(input)) << '\n';
+  double result;
+  
+  try
+  {
+    result = parser->parse(lexer.tokenize(input));
+    std::cout << result << '\n';
+  }
+  catch (std::runtime_error e)
+  {
+    std::cout << e.what() << '\n';
+  }
 	
   return 0;
 }
