@@ -20,11 +20,6 @@ void printModes()
             << "\tResult: 3\n";
 }
 
-double calculate(const Lexer& lexer, const Pointer<IParser>& parser, const std::string& src)
-{
-  return parser->parse(lexer.tokenize(src));
-}
-
 bool startsWith(const std::string& str, const std::string& start)
 {
   return str.find(start) == 0;
