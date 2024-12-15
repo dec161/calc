@@ -1,132 +1,69 @@
 #include "include/Lexer.hpp"
 #include "include/parsers.hpp"
+#include "include/modes.hpp"
 #include <iostream>
-#include <stdexcept>
 
-void printUsage()
+void printHelp()
 {
   std::cout << "Usage:\n"
-            << "calc MODE EXPRESSION\n";
-}
-
-void printModes()
-{
-  std::cout << "Available modes:\n"
-            << "-c\tCommon notation mode\n"
+            << "calc [ -h ]\n"
+            << "calc -c <expression>\n"
+            << "calc -r <expression>\n\n"
+            << "-c\tCommon notation\n"
             << "\tExample: calc -c 1 + 2 * 3 - 4\n"
             << "\tResult: 3\n"
             << "\n"
-            << "-r\tReverse notation mode\n"
+            << "-r\tReverse notation\n"
             << "\tExample: calc -r 4 3 2 * 1 + -\n"
             << "\tResult: 3\n";
 }
 
-bool startsWith(const std::string& str, const std::string& start)
+std::string reduce(char** begin, char** end)
 {
-  return str.find(start) == 0;
-}
-
-std::map<std::string, Pointer<IParser> >::const_iterator findStart(const std::map<std::string, Pointer<IParser> >& map, const std::string& key)
-{
-  for (std::map<std::string, Pointer<IParser> >::const_iterator it = map.begin(); it != map.end(); ++it)
+  std::string ret;
+  for (char** i = begin; i < end; i++)
   {
-    if (startsWith(it->first, key)) return it;
+    ret += *i;
+    ret += ' ';
   }
-  return map.end();
-}
-
-void inputLoop()
-{
-  Lexer lexer;
-  Pointer<IParser> parser;
-  std::string current = "common";
-  
-  std::map<std::string, Pointer<IParser> > parsers;
-  parsers["reverse"] = new ReverseParser;
-  parsers["common"] = new CommonParser;
-  
-  parser = parsers["common"];
-  
-  while (1)
-  {
-    std::string input;
-    
-    std::cout << "(" << current << ")" << " >> ";
-    getline(std::cin, input);
-      
-    if (startsWith("exit", input)) return;
-    
-    std::map<std::string, Pointer<IParser> >::const_iterator it = findStart(parsers, input);
-    if (it != parsers.end())
-    {
-      current = it->first;
-      parser = it->second;
-      continue;
-	}
-    
-    double result;
-  
-    try
-    {
-      result = parser->parse(lexer.tokenize(input));
-      std::cout << result << '\n';
-    }
-    catch (std::runtime_error e)
-    {
-      std::cout << e.what() << '\n';
-    }
-  }
+  return ret;
 }
 
 int main(int argc, char** argv)
 {
-  if (argc == 1)
+  if (argc == 2)
   {
-    inputLoop();
+    printHelp();
     return 0;
   }
-  
-  if (argc < 3)
-  {
-    printUsage();
-    return 1;
-  }
-  
-  Lexer lexer;
-  Pointer<IParser> parser;
-  
+
+  Pointer<IMode> mode;
+
   std::map<std::string, Pointer<IParser> > parsers;
-  parsers["-r"] = new ReverseParser;
-  parsers["-c"] = new CommonParser;
 
-  std::map<std::string, Pointer<IParser> >::const_iterator it = parsers.find(std::string(argv[1]));
-  if (it == parsers.end())
+  if (argc == 1)
   {
-    printModes();
-    return 1;
+    parsers["common"] = new CommonParser;
+    parsers["reverse"] = new ReverseParser;
+
+    mode = new InteractiveMode(Lexer(), parsers, parsers.begin()->first);
+  }
+  else
+  {
+    parsers["-c"] = new CommonParser;
+    parsers["-r"] = new ReverseParser;
+
+    std::map<std::string, Pointer<IParser> >::const_iterator it = parsers.find(std::string(argv[1]));
+    if (it == parsers.end())
+    {
+      printHelp();
+      return 1;
+    }
+
+    mode = new SingleOperationMode(Lexer(), it->second, reduce(argv + 2, argv + argc));
   }
 
-  parser = it->second;
+  mode->start();
 
-  std::string input;
-
-  for (int i = 2; i < argc; i++) 
-  {
-    input += argv[i];
-    input += ' ';
-  }
-
-  double result;
-  
-  try
-  {
-    result = parser->parse(lexer.tokenize(input));
-    std::cout << result << '\n';
-  }
-  catch (std::runtime_error e)
-  {
-    std::cout << e.what() << '\n';
-  }
-	
   return 0;
 }
