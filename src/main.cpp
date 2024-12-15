@@ -57,7 +57,7 @@ int main(int argc, char** argv)
     if (it == parsers.end())
     {
       printHelp();
-      return 1;
+      return 0;
     }
 
     mode = new SingleOperationMode(Lexer(), it->second, reduce(argv + 2, argv + argc));
