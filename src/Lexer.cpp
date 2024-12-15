@@ -115,5 +115,6 @@ std::list<Token> Lexer::tokenize(const std::string &source) const
     ret.push_back(token);
   }
 
+  ret.push_back(Token(End, "End"));
   return ret;
 }

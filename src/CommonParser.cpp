@@ -97,10 +97,10 @@ Pointer<IExpr> CommonParser::parsePrimaryExpr()
     case OpenParen:
       ++it;
       expr = parseExpr();
-	  if (it->getType() != CloseParen) throw std::runtime_error("Closing parenthesis not found");
+      if (it->getType() != CloseParen) throw std::runtime_error("Expected closing parenthesis, found " + it->getValue());
       ++it;
       return expr;
-    
+
     default:
       throw std::runtime_error("Unexpected token found: " + it->getValue());
   }

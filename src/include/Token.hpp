@@ -17,7 +17,8 @@ enum TokenType
   Sqr,
   Sqrt,
   OpenParen,
-  CloseParen
+  CloseParen,
+  End
 };
 
 class Token
@@ -27,7 +28,7 @@ class Token
     std::string value;
 
   public:
-    Token(TokenType type, const std::string &value) : type(type), value(value) { };
+    Token(TokenType type, const std::string& value) : type(type), value(value) { };
 
     TokenType getType() const { return type; }
     const std::string& getValue() const { return value; }
