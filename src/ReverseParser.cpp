@@ -18,6 +18,9 @@ Pointer<IExpr> createUnaryExpr(TokenType type, const Pointer<IExpr>& x)
     
     case Sqrt:
       return new SqrtExpr(x);
+
+    default:
+      throw std::runtime_error("This should be unreachable");
   }
 }
 
@@ -36,6 +39,9 @@ Pointer<IExpr> createBinaryExpr(TokenType type, const Pointer<IExpr>& lhs, const
     
     case Div:
       return new DivExpr(lhs, rhs);
+
+    default:
+      throw std::runtime_error("This should be unreachable");
   }
 }
 
